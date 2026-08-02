@@ -4,9 +4,17 @@ title: Evolutionary Algorithms
 
 Overview of evolutionary algorithms I'm exploring.
 
+The origins of Evolution Computing can be traced to early
+work by Computer Scientists in the 1950s and 1960s with
+the idea that evolutionary processes could be applied to
+engineering problems of optimization. This led to three
+major independent implementations of Evolutionary
+Computing of which two are Evolution Strategies and
+Genetic Algorithms.
+
 Questions:
 
-Are Genetic Algorithms and Evolution Strategy basically same algorithm?
+[x] Are Genetic Algorithms and Evolution Strategy basically same algorithm?
 
 Papers: 
 

@@ -6,7 +6,7 @@ A genetic algorithm is biologically inspired method for finding best solution (o
 
 It searches for best solution by creating population of random candidates and evolving them over generations based on best score fitness. Genetic algorithm starts with random population of candidate genomes and then over epochs updates population with small noise or genomes cross-over or both. 
 
-<img src="../../assets/genetic_algorithm.svg" alt="Genetic Algorithm diagram" width="800"/>
+<img src="../assets/genetic_algorithm.svg" alt="Genetic Algorithm diagram" width="800"/>
 
 1. Initialization
 
