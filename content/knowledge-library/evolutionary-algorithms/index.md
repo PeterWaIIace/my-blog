@@ -4,6 +4,16 @@ title: Evolutionary Algorithms
 
 Overview of evolutionary algorithms I'm exploring.
 
+Questions:
+
+Are Genetic Algorithms and Evolution Strategy basically same algorithm?
+
+Papers: 
+
+https://www.ceas3.uc.edu/ret/archive/2018/ret/docs/readings/Project%203/2018RET_ReadingMaterial_Introduction%20to%20Genetic%20Algorithms.pdf
+
+Cheat sheet table tiwth algorithms:
+
 - [[Genetic Algorithm]] - population of solutions evolved via selection, crossover, and mutation
 - [[Evolution Strategy]] - optimization driven by mutation strength adaptation
 - [[Genetic Programming]] - evolves programs or expressions, not fixed-length vectors
