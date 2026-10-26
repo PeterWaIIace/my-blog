@@ -20,17 +20,7 @@ Evolutionary algorithms (EAs) are **population-based metaheuristics** that mimic
 ---
 
 ## Evolutionary Algorithm Family
-Below is a text-based representation of the relationships between key evolutionary algorithms in this knowledge library:
-
-```
-Evolutionary Algorithms
-├── Genetic Algorithms
-├── Evolution Strategies
-│   ├── (1+1)-ES
-│   └── CMA-ES (descendant of (1+1)-ES)
-│       └── Modern Variants: BIPOP-CMA-ES, IPOP-CMA-ES
-└── Differential Evolution
-```
+Evolutionary algorithms (EAs) encompass a variety of methods, each with unique strengths and applications. Below is an overview of the key algorithms in this knowledge library:
 
 ### Key Algorithms
 | **Algorithm**               | **Focus**                                      | **Key Features**                                                                 | **Best For**                                  |
