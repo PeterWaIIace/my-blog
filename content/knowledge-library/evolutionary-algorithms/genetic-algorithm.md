@@ -113,6 +113,7 @@ graph TD
    - Another continuous optimization algorithm, but DE relies on **vector differences** rather than crossover.
 
 ## See Also
+- [Evolutionary Algorithms Overview](./evolutionary-algorithms.md): A unified introduction to the family of evolutionary algorithms.
 - [CMA-ES](./cma-es.md): A state-of-the-art evolution strategy for continuous optimization.
 - [(1+1)-ES](./(1+1)-es.md): The simplest evolution strategy, focusing on mutation and elitist selection.
 - [Differential Evolution](./differential-evolution.md): A robust optimizer using vector differences for continuous problems.
