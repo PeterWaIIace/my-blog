@@ -89,5 +89,33 @@ where:
 - $ \delta(H) $: Defining length of schema $ H $ (distance between first and last fixed positions).
 - $ o(H) $: Order of schema $ H $ (number of fixed positions).
 
+## Evolutionary Lineage
+Genetic Algorithms (GAs) are a foundational method in the **evolutionary algorithms (EAs)** family and have inspired many variants and extensions. Below is a graph showing their connections to other key algorithms:
+
+```mermaid
+graph TD
+    A[Evolutionary Algorithms] --> B[Genetic Algorithms]
+    A --> C[Evolution Strategies]
+    C --> D[(1+1)-ES]
+    C --> E[CMA-ES]
+    A --> F[Differential Evolution]
+    D --> E
+```
+
+### Key Connections:
+1. **Evolution Strategies (ES)**:
+   - While GAs emphasize **crossover** and **population diversity**, ES focuses on **mutation** and **adaptive step-size control**.
+2. **CMA-ES**:
+   - A modern descendant of ES, CMA-ES adapts the **covariance matrix** of a Gaussian distribution for continuous optimization.
+3. **(1+1)-ES**:
+   - The simplest ES, which inspired the **step-size adaptation** mechanism in CMA-ES.
+4. **Differential Evolution (DE)**:
+   - Another continuous optimization algorithm, but DE relies on **vector differences** rather than crossover.
+
+## See Also
+- [CMA-ES](./cma-es.md): A state-of-the-art evolution strategy for continuous optimization.
+- [(1+1)-ES](./(1+1)-es.md): The simplest evolution strategy, focusing on mutation and elitist selection.
+- [Differential Evolution](./differential-evolution.md): A robust optimizer using vector differences for continuous problems.
+
 ## Paper
 [Introduction to Genetic Algorithms (UC Paper)](https://www.ceas3.uc.edu/ret/archive/2018/ret/docs/readings/Project%203/2018RET_ReadingMaterial_Introduction%20to%20Genetic%20Algorithms.pdf)

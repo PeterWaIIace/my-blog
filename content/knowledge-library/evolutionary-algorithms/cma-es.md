@@ -4,6 +4,32 @@ title: Covariance Matrix Adaptation Evolution Strategy (CMA-ES)
 
 A state-of-the-art evolutionary algorithm for continuous black-box optimization, renowned for its adaptive search capabilities and robustness.
 
+## Evolutionary Lineage
+CMA-ES is a modern descendant of **evolution strategies (ES)**, which themselves are part of the broader family of **evolutionary algorithms (EAs)**. Below is a graph showing its connections to other key algorithms:
+
+```mermaid
+graph TD
+    A[Evolutionary Algorithms] --> B[Genetic Algorithms]
+    A --> C[Evolution Strategies]
+    C --> D[(1+1)-ES]
+    C --> E[CMA-ES]
+    A --> F[Differential Evolution]
+    D --> E
+    E --> G[Modern Variants: BIPOP-CMA-ES, IPOP-CMA-ES]
+```
+
+### Key Connections:
+1. **Evolution Strategies (ES)**:
+   - CMA-ES inherits the core principles of ES, such as **mutation** and **selection**, but introduces **covariance matrix adaptation** for improved performance.
+2. **(1+1)-ES**:
+   - The simplest ES, which inspired the **step-size adaptation** mechanism in CMA-ES.
+3. **Genetic Algorithms (GAs)**:
+   - While GAs focus on **crossover** and **discrete representations**, CMA-ES emphasizes **adaptive mutation** and **continuous optimization**.
+4. **Differential Evolution (DE)**:
+   - Another continuous optimization algorithm, but DE relies on **vector differences** rather than covariance adaptation.
+5. **Modern Variants**:
+   - **BIPOP-CMA-ES** and **IPOP-CMA-ES** extend CMA-ES with **restart strategies** for global optimization.
+
 ## Core Idea
 CMA-ES is an **evolution strategy (ES)** that adapts the **covariance matrix** of a multivariate Gaussian distribution to guide the search for optimal solutions. Unlike traditional genetic algorithms, CMA-ES:
 - Works directly with **real-valued vectors**.
