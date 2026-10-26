@@ -90,17 +90,7 @@ where:
 - $ o(H) $: Order of schema $ H $ (number of fixed positions).
 
 ## Evolutionary Lineage
-Genetic Algorithms (GAs) are a foundational method in the **evolutionary algorithms (EAs)** family and have inspired many variants and extensions. Below is a graph showing their connections to other key algorithms:
-
-```mermaid
-graph TD
-    A[Evolutionary Algorithms] --> B[Genetic Algorithms]
-    A --> C[Evolution Strategies]
-    C --> D[(1+1)-ES]
-    C --> E[CMA-ES]
-    A --> F[Differential Evolution]
-    D --> E
-```
+Genetic Algorithms (GAs) are a foundational method in the **evolutionary algorithms (EAs)** family and have inspired many variants and extensions. Here’s how they connect to other key algorithms:
 
 ### Key Connections:
 1. **Evolution Strategies (ES)**:

@@ -5,17 +5,7 @@ title: Differential Evolution
 A simple yet robust **evolutionary algorithm** for continuous optimization, using **vector differences** to guide the search for optimal solutions.
 
 ## Evolutionary Lineage
-Differential Evolution (DE) is part of the **evolutionary algorithms (EAs)** family and shares similarities with other continuous optimization methods. Below is a graph showing its connections to other key algorithms:
-
-```mermaid
-graph TD
-    A[Evolutionary Algorithms] --> B[Genetic Algorithms]
-    A --> C[Evolution Strategies]
-    C --> D[(1+1)-ES]
-    C --> E[CMA-ES]
-    A --> F[Differential Evolution]
-    D --> E
-```
+Differential Evolution (DE) is part of the **evolutionary algorithms (EAs)** family and shares similarities with other continuous optimization methods. Here’s how it connects to other key algorithms:
 
 ### Key Connections:
 1. **Evolution Strategies (ES)**:

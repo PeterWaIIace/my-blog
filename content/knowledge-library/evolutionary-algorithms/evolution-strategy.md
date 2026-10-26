@@ -7,16 +7,15 @@ In contrast to Genetic Algorithms, Evolution Strategies (ES) were initially deve
 > “The method of organic evolution represents an optimal strategy for the adaptation of living things to their environment… [and] … it should therefore be worthwhile to take over the principles of biological evolution for the optimization of technical systems.”[45]
 
 ## Evolutionary Lineage
-Evolution Strategies (ES) are a cornerstone of the **evolutionary algorithms (EAs)** family and have inspired many modern optimization methods. Below is a graph showing their connections to other key algorithms:
+Evolution Strategies (ES) are a cornerstone of the **evolutionary algorithms (EAs)** family and have inspired many modern optimization methods. Below is a text-based representation of their connections to other key algorithms:
 
-```mermaid
-graph TD
-    A[Evolutionary Algorithms] --> B[Genetic Algorithms]
-    A --> C[Evolution Strategies]
-    C --> D[(1+1)-ES]
-    C --> E[CMA-ES]
-    A --> F[Differential Evolution]
-    D --> E
+```
+Evolutionary Algorithms
+├── Genetic Algorithms
+├── Evolution Strategies
+│   ├── (1+1)-ES
+│   └── CMA-ES (descendant of (1+1)-ES))
+└── Differential Evolution
 ```
 
 ### Key Connections:
