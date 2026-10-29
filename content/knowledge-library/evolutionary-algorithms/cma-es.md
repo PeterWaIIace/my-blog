@@ -39,8 +39,34 @@ CMA-ES is an **evolution strategy (ES)** that adapts the **covariance matrix** o
 ## Key Features
 - **Adaptive Step Size**: Automatically adjusts the scale of mutations to balance exploration and exploitation.
 - **Covariance Matrix Adaptation**: Learns correlations between variables to navigate complex fitness landscapes (e.g., elongated valleys or ridges).
-- **No Hyperparameter Tuning**: Self-adapts its parameters during the search.
-- **Robustness**: Performs well on high-dimensional, noisy, or non-convex problems.
+- **Useful Defaults**: Internal adaptation parameters have standard defaults; the initial guess, initial step size, evaluation budget, and sometimes population size still need choosing.
+- **Robustness**: Useful on noisy or non-convex problems. Full covariance adaptation needs $O(n^2)$ storage, so very high-dimensional tasks may need specialized variants.
+
+## A simple picture: learning the shape of the search
+
+Imagine searching for the lowest point in a long, tilted valley:
+
+1. Generate a cloud of candidate solutions around the current center.
+2. Evaluate them and move the center toward the better candidates.
+3. Stretch and turn the cloud toward directions that have been useful.
+4. Adjust the overall search radius and repeat.
+
+The **mean** $m$ is the center, the **step size** $\sigma$ controls the overall radius, and the **covariance matrix** $C$ controls shape and orientation. The actual sampling covariance is $\sigma^2C$.
+
+The diagonal entries of $C$ describe variance in each coordinate; off-diagonal entries describe how coordinates vary together. A positive off-diagonal entry encourages those coordinates to move in the same direction.
+
+### Where matrix decomposition fits
+
+To sample that cloud, start with independent Gaussian noise $z\sim\mathcal{N}(0,I)$ and transform it:
+
+$$x=m+\sigma Az,\qquad AA^T=C$$
+
+Two ways to find such a factor $A$ are:
+
+- **[[Eigendecomposition]]**: $C=Q\Lambda Q^T$, so use $A=Q\Lambda^{1/2}$. The eigenvectors give the cloud's main directions; square roots of eigenvalues give its relative widths.
+- **[[Cholesky Decomposition]]**: $C=LL^T$, so use $A=L$. This gives a triangular recipe for generating the same Gaussian distribution when $C$ is positive definite.
+
+Standard CMA-ES commonly uses eigendecomposition because it also supplies the symmetric inverse square root used in step-size adaptation. Cholesky-based variants adapt the factorization and related updates; the two methods are not interchangeable in every part of the algorithm.
 
 ## Algorithm Overview
 ### 1. Initialization
@@ -98,7 +124,7 @@ where:
 The **Sphere function** is a simple benchmark for optimization algorithms:
 $$f(\mathbf{x}) = \sum_{i=1}^n x_i^2$$
 - **Global minimum**: $ \mathbf{x}^* = \mathbf{0} $ with $ f(\mathbf{x}^*) = 0 $.
-- **CMA-ES Performance**: Finds the minimum in **$ O(n) $** function evaluations, even for high-dimensional problems ($ n \geq 100 $).
+- **CMA-ES Performance**: A useful basic test, but the number of evaluations depends on dimension, initialization, and the requested accuracy; there is no fixed evaluation count to reach the exact minimum.
 
 ### Python Implementation
 ```python
