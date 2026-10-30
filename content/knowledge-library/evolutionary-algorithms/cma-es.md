@@ -30,6 +30,8 @@ Imagine finding the lowest point in a long, tilted valley:
 3. Stretch and turn the cloud toward directions that have been useful.
 4. Adjust the overall radius and repeat.
 
+![[cma-es-valley.svg|The sampling cloud drifting down a tilted valley: round at first, then stretched along the valley floor as the mean (dashed path) approaches the optimum|540]]
+
 Three quantities control the cloud:
 
 - The **mean** $m$ is its center.
@@ -38,11 +40,15 @@ Three quantities control the cloud:
 
 The actual sampling covariance is $\sigma^2C$. The diagonal of $C$ gives the spread along each coordinate; the off-diagonal entries describe how coordinates move *together*. A positive off-diagonal entry means "when this coordinate grows, that one tends to grow too."
 
+![[cma-es-cloud.svg|A round noise cloud z ~ N(0, I) reshaped by A into the tilted sampling cloud around the mean, with the step size σ setting its overall radius|540]]
+
 ## Where matrix decomposition fits
 
 Sampling from $\mathcal{N}(0, C)$ requires shaping raw noise. Start with independent Gaussian noise $z\sim\mathcal{N}(0,I)$ — a round cloud — and transform it:
 
-$$x=m+\sigma Az,\qquad AA^T=C$$
+$$
+x=m+\sigma Az,\qquad AA^T=C
+$$
 
 Any $A$ satisfying $AA^T=C$ maps the round cloud onto the correct ellipsoid. Two standard choices:
 
@@ -62,18 +68,27 @@ One generation of CMA-ES, step by step.
 
 ### 2. Sampling
 Draw $ \lambda $ candidates from the current cloud:
-$$\mathbf{x}_i^{(g+1)} \sim \mathbf{m}^{(g)} + \sigma^{(g)} \cdot \mathcal{N}(\mathbf{0}, \mathbf{C}^{(g)}), \quad i = 1, 2, \dots, \lambda$$
+$$
+\mathbf{x}_i^{(g+1)} \sim \mathbf{m}^{(g)} + \sigma^{(g)} \cdot \mathcal{N}(\mathbf{0}, \mathbf{C}^{(g)}), \quad i = 1, 2, \dots, \lambda
+$$
 
 ### 3. Selection and Recombination
 Evaluate all $ \lambda $ candidates, keep the **top $ \mu $**, and move the mean toward them:
-$$\mathbf{m}^{(g+1)} = \sum_{i=1}^\mu w_i \mathbf{x}_{i:\lambda}^{(g+1)}$$
+$$
+\mathbf{m}^{(g+1)} = \sum_{i=1}^\mu w_i \mathbf{x}_{i:\lambda}^{(g+1)}
+$$
 where $ w_i $ are weights, typically ordered $ w_1 \geq w_2 \geq \dots \geq w_\mu $. The mean is simply a weighted average of the winners.
 
 ### 4. Step Size Adaptation
 **Idea**: track how far the mean has moved recently. If it travels farther than chance would predict, the search is working — take bigger steps. If it barely moves, the steps are canceling out — take smaller ones.
 
-$$\mathbf{p}_\sigma^{(g+1)} = (1 - c_\sigma) \mathbf{p}_\sigma^{(g)} + \sqrt{c_\sigma (2 - c_\sigma) \mu_{\text{eff}}} \cdot \mathbf{C}^{(g)^{-1/2}} \cdot \frac{\mathbf{m}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}}$$
-$$\sigma^{(g+1)} = \sigma^{(g)} \cdot \exp\left(\frac{c_\sigma}{d_\sigma} \left( \frac{\|\mathbf{p}_\sigma^{(g+1)}\|}{\mathbb{E}[\|\mathcal{N}(\mathbf{0}, \mathbf{I})\|]} - 1 \right)\right)$$
+$$
+\mathbf{p}_\sigma^{(g+1)} = (1 - c_\sigma) \mathbf{p}_\sigma^{(g)} + \sqrt{c_\sigma (2 - c_\sigma) \mu_{\text{eff}}} \cdot \mathbf{C}^{(g)^{-1/2}} \cdot \frac{\mathbf{m}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}}
+$$
+
+$$
+\sigma^{(g+1)} = \sigma^{(g)} \cdot \exp\left(\frac{c_\sigma}{d_\sigma} \left( \frac{\|\mathbf{p}_\sigma^{(g+1)}\|}{\mathbb{E}[\|\mathcal{N}(\mathbf{0}, \mathbf{I})\|]} - 1 \right)\right)
+$$
 
 - $ \mathbf{p}_\sigma $ is the **evolution path** — the running record of recent mean movement.
 - $ c_\sigma $ and $ d_\sigma $ are learning rates.
@@ -84,8 +99,13 @@ This is called **cumulative step-size adaptation (CSA)**.
 ### 5. Covariance Matrix Adaptation
 **Idea**: reshape the cloud along two kinds of evidence. The **rank-one** update stretches it along the path the mean has recently traveled. The **rank-$ \mu $** update stretches it along the directions in which the winners actually spread out.
 
-$$\mathbf{p}_c^{(g+1)} = (1 - c_c) \mathbf{p}_c^{(g)} + \sqrt{c_c (2 - c_c) \mu_{\text{eff}}} \cdot \frac{\mathbf{m}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}}$$
-$$\mathbf{C}^{(g+1)} = (1 - c_1 - c_\mu) \mathbf{C}^{(g)} + c_1 \mathbf{p}_c^{(g+1)} \mathbf{p}_c^{(g+1)^T} + c_\mu \sum_{i=1}^\mu w_i \left( \frac{\mathbf{x}_{i:\lambda}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}} \right) \left( \frac{\mathbf{x}_{i:\lambda}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}} \right)^T$$
+$$
+\mathbf{p}_c^{(g+1)} = (1 - c_c) \mathbf{p}_c^{(g)} + \sqrt{c_c (2 - c_c) \mu_{\text{eff}}} \cdot \frac{\mathbf{m}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}}
+$$
+
+$$
+\mathbf{C}^{(g+1)} = (1 - c_1 - c_\mu) \mathbf{C}^{(g)} + c_1 \mathbf{p}_c^{(g+1)} \mathbf{p}_c^{(g+1)^T} + c_\mu \sum_{i=1}^\mu w_i \left( \frac{\mathbf{x}_{i:\lambda}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}} \right) \left( \frac{\mathbf{x}_{i:\lambda}^{(g+1)} - \mathbf{m}^{(g)}}{\sigma^{(g)}} \right)^T
+$$
 
 - $ \mathbf{p}_c $ is the evolution path used for the covariance update.
 - $ c_1 $ and $ c_\mu $ are the learning rates for the rank-one and rank-$ \mu $ updates.
@@ -114,7 +134,9 @@ The new $ C $ is a weighted mix: mostly the old shape, plus a stretch along the 
 ## Example: Minimizing the Sphere Function
 
 The **Sphere function** is the "hello world" of optimization:
-$$f(\mathbf{x}) = \sum_{i=1}^n x_i^2$$
+$$
+f(\mathbf{x}) = \sum_{i=1}^n x_i^2
+$$
 
 Its global minimum sits at $ \mathbf{x}^* = \mathbf{0} $ with $ f(\mathbf{x}^*) = 0 $. CMA-ES solves it reliably, but the evaluation count grows with dimension and required accuracy — treat it as a smoke test, not a speed benchmark.
 
