@@ -8,6 +8,6 @@ Notes, references, and resources I've collected.
 
 - [[python-classes-and-metaclasses|Python classes, ABCs, and metaclasses]]
 
-## Gaze Tracking
+## Models
 
-- [[Gaze Tracking]] — models for gaze estimation from face landmarks: [[Ridge Regression]], [[MLP]], [[GRU]], [[Temporal Transformer]], with measured results from our eye-tracking data pipeline
+- [[Models]] — theory of the model families I use: [[Ridge Regression]], [[MLP]], [[GRU]], [[Temporal Transformer]]
