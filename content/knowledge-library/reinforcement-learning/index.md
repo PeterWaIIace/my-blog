@@ -52,3 +52,14 @@ Cheat sheet:
 - [[PPO]] — clipped policy optimization with a learned critic and per-step GAE advantages
 - [[GRPO]] — PPO's objective without the critic; advantage is the group z-score over G rollouts
 - [[MAPO]] — GRPO with certainty-adaptive advantages (APD/TCR) for skewed outcome groups
+
+## Further reading
+
+[Reinforcement Learning from Verifiable Rewards](https://rlvrbook.com/) (Kian Kyars, 2026, v1) is a free online book on RLVR — training models on checkable rewards from math, code, proofs, tools, and agent environments. It covers:
+
+- **Verifier design** — outcome rewards, process rewards, and learned/programmatic/hybrid verifiers (Ch. 1–4).
+- **From verifiers to capability** — turning checks into training signal, and search/test-time verification (Ch. 5–6).
+- **Optimization pressure** — reward hacking and where the paradigm breaks in practice (Ch. 7–8).
+- **Domains and frontiers** — an end-to-end frontier training recipe, long-context/multimodal/agentic RLVR, and open problems (Ch. 9–11).
+
+Appendices include a minimal RL and post-training background, a practical verifier design checklist, core terminology, and research ideas. Kyars says he wrote it to track a subfield moving faster than the RLHF book's coverage of it.
